@@ -15,8 +15,30 @@ DHT dht(DHTPIN, DHTTYPE);
 unsigned long tempoAnterior = 0;
 unsigned long intervalo = 1000;
 
+//motor ventoinha
+int IN1 = 7;
+int IN2 = 8 ;
+int velocidadeA = 9; //PWM
+
+/*
+//motor água (se arranjarmos isso)
+int IN3 = 13;
+int IN4 = 12;
+int velocidadeB = 11; //PWM
+*/
+
+int velocidade = 0;
+
 void setup()
 {
+  //Motores
+  pinMode(IN1,OUTPUT);
+  pinMode(IN2,OUTPUT);
+  //pinMode(IN3,OUTPUT);
+  //pinMode(IN4,OUTPUT);
+  pinMode(velocidadeA,OUTPUT);
+  //pinMode(velocidadeB,OUTPUT);
+  
   Serial.begin(9600);
   dht.begin();
   sensors.begin();
@@ -58,7 +80,7 @@ void loop()
 
    //Sensor Temperatura Terra ^^
 
-   unsigned long tempoAtual = millis(); // Realizamos a leitura atual do tempo em que o nosso Arduino Nano está ligado
+  unsigned long tempoAtual = millis(); // Realizamos a leitura atual do tempo em que o nosso Arduino Nano está ligado
   if (tempoAtual-tempoAnterior > intervalo)
   { 
   // Pequena lógica para realizar leituras temporizadas sem parar o microcontrolador
@@ -68,8 +90,8 @@ void loop()
   if (leitura<=1023 && leitura>=500)
   {
     // Se a leitura feita for um valor entre 1023 e 682 podemos definir que o solo está com uma baixa condutividade, logo a planta deve ser regada
-    Serial.print("Nível de Humidade Alto: ");
-    Serial.print(leitura);
+    Serial.print("HUMIDADE SOLO: ");
+    Serial.println(leitura);
     Serial.println("  ");
   }
   
